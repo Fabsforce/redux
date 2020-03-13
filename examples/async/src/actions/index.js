@@ -3,6 +3,8 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT'
 export const INVALIDATE_SUBREDDIT = 'INVALIDATE_SUBREDDIT'
 
+
+// Synchronous Actions Creators
 export const selectSubreddit = subreddit => ({
   type: SELECT_SUBREDDIT,
   subreddit
@@ -18,6 +20,7 @@ export const requestPosts = subreddit => ({
   subreddit
 })
 
+
 export const receivePosts = (subreddit, json) => ({
   type: RECEIVE_POSTS,
   subreddit,
@@ -25,8 +28,15 @@ export const receivePosts = (subreddit, json) => ({
   receivedAt: Date.now()
 })
 
+
+
+// Asynchronous Actions Creators => thunk
 const fetchPosts = subreddit => dispatch => {
+  // First dispatch: the app state is updated to inform that the API call is starting.
   dispatch(requestPosts(subreddit))
+
+  // The function called by the thunk middleware can return a value, that is passed on as the return value of the dispatch method.
+  // In this case, we return a promise to wait for. This is not required by thunk middleware, but it is convenient for us.
   return fetch(`https://www.reddit.com/r/${subreddit}.json`)
     .then(response => response.json())
     .then(json => dispatch(receivePosts(subreddit, json)))

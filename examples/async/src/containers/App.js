@@ -38,6 +38,8 @@ class App extends Component {
     dispatch(fetchPostsIfNeeded(selectedSubreddit))
   }
 
+
+
   render() {
     const { selectedSubreddit, posts, isFetching, lastUpdated } = this.props
     const isEmpty = posts.length === 0
@@ -45,7 +47,7 @@ class App extends Component {
       <div>
         <Picker value={selectedSubreddit}
                 onChange={this.handleChange}
-                options={[ 'reactjs', 'frontend' ]} />
+                options={[ 'reactjs', 'frontend', 'messi' ]} />
         <p>
           {lastUpdated &&
             <span>
