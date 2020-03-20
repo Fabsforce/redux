@@ -31,6 +31,7 @@ export const receivePosts = (subreddit, json) => ({
 
 
 // Asynchronous Actions Creators => thunk
+// Though its insides are different, you would use it just like any other action creator: store.dispatch(fetchPosts('reactjs'))
 const fetchPosts = subreddit => dispatch => {
   // First dispatch: the app state is updated to inform that the API call is starting.
   dispatch(requestPosts(subreddit))
@@ -41,6 +42,9 @@ const fetchPosts = subreddit => dispatch => {
     .then(response => response.json())
     .then(json => dispatch(receivePosts(subreddit, json)))
 }
+
+
+
 
 const shouldFetchPosts = (state, subreddit) => {
   const posts = state.postsBySubreddit[subreddit]
